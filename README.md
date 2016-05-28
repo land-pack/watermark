@@ -18,8 +18,19 @@ sudo apt-get upgrade
 ####Install Mysql
 ```shell
 sudo apt-get install mysql-server
+sudo apt-get install mysql-client
 ```
-
+####Install Pip
+```shell
+sudo apt-get install python-dev
+sudo apt-get install build-essential
+sudo apt-get install python-pip
+```
+And we can also use curl and python to download and install Pip.
+```shell
+curl "https://bootstrap.pypa.io/get_pip.py" -o "get_pip.py"
+python get-pip.py
+```
 Installation Dependent package
 ------------------------------
     pip install -r requirements.txt
