@@ -9,10 +9,16 @@ and `Pillow`, etc!
 
 Configure the operating system environment
 ------------------------------------------
-    $sudo apt-get update
-    $sudo apt-get upgrade
 
-
+####Update source for ubuntu & update software
+```shell
+sudo apt-get update
+sudo apt-get upgrade
+```
+####Install Mysql
+```shell
+sudo apt-get install mysql-server
+```
 
 Installation Dependent package
 ------------------------------
