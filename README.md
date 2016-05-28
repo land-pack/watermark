@@ -31,6 +31,25 @@ And we can also use curl and python to download and install Pip.
 curl "https://bootstrap.pypa.io/get_pip.py" -o "get_pip.py"
 python get-pip.py
 ```
+####Install SqlAlchemy & Mysql
+```shell
+sudo apt-get install python-all-dev
+sudo apt-get install python-mysqldb
+sudo apt-get install libmysqlclient-dev
+```
+Because, I am going to use sqlalchemy to connect the database. so 
+I want will need the `mysql-python` for me.
+####Install virtualenv by pip & create a virtual env for test!
+```
+pip install virtualenv
+virtualenv sqlalchemyEnv
+cd sqlalchemyEnv
+mkdir src
+cd src
+pip install mysql-python
+pip install sqlalchemy
+```
+
 Installation Dependent package
 ------------------------------
     pip install -r requirements.txt
