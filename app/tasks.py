@@ -1,4 +1,4 @@
-#celery worker -l info --beat
+# celery worker -l info --beat
 
 import sys
 import struct
@@ -9,7 +9,7 @@ from crypy import AESCipher
 from lsb import decompose, assemble, set_bit
 from celery.task import task
 # ORM ...
-from models import ImageORM, engine
+from models import ImageORM, engine, WatermarkORM
 from sqlalchemy.orm import sessionmaker
 
 # create a session
@@ -18,9 +18,16 @@ session = Session()
 
 
 # Sand Box
-def store(session, id=1, embed=1, path='abc/def/'):
-    image = ImageORM(id=id, embed=embed, path=path)
+def store(session, embed=1, path='abc/def/'):
+    image = ImageORM(embed=embed, path=path)
     session.add(image)
+    session.commit()
+
+
+# Store result ...
+def store_result(session, result, path='abc/def'):
+    result = WatermarkORM(result=result, path=path)
+    session.add(result)
     session.commit()
 
 
@@ -62,7 +69,7 @@ def embed_string(image_input, id=1, image_out='steg', data='898823', password='1
             idx = idx + 3
     steg_img.save(image_input + "-stego.png", "PNG")
     # embedded successfully..
-    store(session, id=id)
+    store(session)
     return "embedded successfully"
 
 
@@ -93,6 +100,7 @@ def extract(in_file, out_file='', password='1234'):
     # Return the watermark to client ..
     # out_f.close()
     # Return the watermark to client ..
+    store_result(result=data_dec)
     return data_dec
 
 

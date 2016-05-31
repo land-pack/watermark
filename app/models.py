@@ -13,10 +13,18 @@ from sqlalchemy import Column, Integer, String, Boolean
 
 
 class ImageORM(Base):
-    __tablename__ = 'images'
+    __tablename__ = 'watermark'
     id = Column(Integer, primary_key=True, autoincrement=True)
     embed = Column(Integer)
     path = Column(String(32))
 
+class WatermarkORM(Base):
+    __tablename__ = 'watermarked'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    result = Column(Integer)
+    path = Column(String(32))
+
 
 ImageORM.metadata.create_all(engine)
+
+# Run this script to create a table ..
