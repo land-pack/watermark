@@ -6,4 +6,4 @@ results = []
 celery = Celery()
 celery.config_from_object('celeryconfig')
 
-results.append(celery.send_task("task.extract", [sys.argv[1]]))
+results.append(celery.send_task("tasks.extract", [sys.argv[1]]))

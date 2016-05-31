@@ -109,4 +109,21 @@ Also, when i install the `pyopenssl` ,it is get me a error!
 ```shell
 sudo apt-get install libssl-dev`
 ```
+If you install crypt failure,try the below command!
+```shell
+sudo apt-get install build-essential libssl-dev libffi-dev python-dev
+```
+Create a database for watermark
+-------------------------------
+```shell
+mysql -uroot -p
+create database sqlalchemy
+```
+
+Test the watermark with celery
+------------------------------
+```shell
+celery worker -l info --beat
+```
+Warning don't run this on root!
 

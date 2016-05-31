@@ -1,10 +1,11 @@
-from lsb import embed, extract
+#celery worker -l info --beat
+
 import sys
 import struct
 import numpy
 import matplotlib.pyplot as plt
 from PIL import Image
-from crypt import AESCipher
+from crypy import AESCipher
 from lsb import decompose, assemble, set_bit
 from celery.task import task
 # ORM ...

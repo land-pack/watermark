@@ -6,4 +6,4 @@ results = []
 celery = Celery()
 celery.config_from_object('celeryconfig')
 
-results.append(celery.send_task("task.embed_string", [sys.argv[1]]))
+results.append(celery.send_task("tasks.embed_string", [sys.argv[1]]))

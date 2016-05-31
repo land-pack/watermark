@@ -14,7 +14,7 @@ from sqlalchemy import Column, Integer, String, Boolean
 
 class ImageORM(Base):
     __tablename__ = 'images'
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     embed = Column(Integer)
     path = Column(String(32))
 

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 from PIL import Image
 
-from crypt import AESCipher
+from crypy import AESCipher
 
 
 # Decompose a binary file into an array of bits
