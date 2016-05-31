@@ -86,7 +86,27 @@ sudo pip install matplotlib
 
 Install the watermark requirement
 ------------------------------
+Before you install the requirement ,you should install the something!
+```shell
+sudo apt-get install libjpeg8-dev
+sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
+sudo apt-get install build-essential autoconf libtool pkg-config python-opengl python-imaging python-pyrex python-pyside.qtopengl idle-python2.7 qt4-dev-tools qt4-designer libqtgui4 libqtcore4 libqt4-xml libqt4-test libqt4-script libqt4-network libqt4-dbus python-qt4 python-qt4-gl libgle3 python-dev
+sudo apt-get install python-pil
+```
+Now, time to install it!
 ```shell
     pip install -r requirements.txt
+```
+I find get some error! said i install `cffi` error! and i try the below
+command , and fix it!
+```shell
+sudo apt-get remove build-essential libffi-dev python-dev
+sudo apt-get install build-essential libffi-dev python-dev
+sudo apt-get remove python-pycparser
+sudo apt-get install python-pycparser
+```
+Also, when i install the `pyopenssl` ,it is get me a error!
+```shell
+sudo apt-get install libssl-dev`
 ```
 
