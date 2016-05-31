@@ -100,7 +100,7 @@ def extract(in_file, out_file='', password='1234'):
     # Return the watermark to client ..
     # out_f.close()
     # Return the watermark to client ..
-    store_result(result=data_dec)
+    store_result(session, result=data_dec)
     return data_dec
 
 
