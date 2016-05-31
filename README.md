@@ -40,7 +40,7 @@ sudo apt-get install libmysqlclient-dev
 Because, I am going to use sqlalchemy to connect the database. so 
 I want will need the `mysql-python` for me.
 ####Install virtualenv by pip & create a virtual env for test!
-```
+```shell
 pip install virtualenv
 virtualenv sqlalchemyEnv
 cd sqlalchemyEnv
@@ -49,9 +49,44 @@ cd src
 pip install mysql-python
 pip install sqlalchemy
 ```
-
+####Install erlang & rabbitmq
+```shell
+sudo apt-get install erlang
+sudo apt-get install rabbitmq-server
+```
+Because ,I will use the celery so the default AMQP is my first choose!
+so I install it on my machine! if you like to use another you can try it!
+```shell
+sudo rabbitmq-server start
+```
+Now,You rabbitmq server should work! if no! try to fix ! google is your good friend!
 Installation Dependent package
-------------------------------
-    pip install -r requirements.txt
+#### Install numpy & scipy
+```shell
+sudo apt-get install python-numpy
+sudo apt-get install python-scipy
+```
+#### Install matplotlib
+```shell
+sudo apt-get install libpng-dev
+```
+Get the freetype source and make it install by hand
+```shell
+wget http://download.savannah.gnu.org/releases/freetype/freetype-2.4.10.tar.gz
+tar zxvf freetype-2.4.10.tar.gz
+cd freetype-2.4.10/
+./configure
+make
+sudo make install
+```
+After install success and then you can install the matplotlib
+```shell
+sudo pip install matplotlib
+```
 
+Install the watermark requirement
+------------------------------
+```shell
+    pip install -r requirements.txt
+```
 
