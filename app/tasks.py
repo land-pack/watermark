@@ -9,7 +9,7 @@ from crypy import AESCipher
 from lsb import decompose, assemble, set_bit
 from celery.task import task
 # ORM ...
-from models import ImageORM, engine, WatermarkORM
+from models import ImageORM, engine, WatermarkORM, ImageName
 from sqlalchemy.orm import sessionmaker
 
 # create a session
@@ -18,8 +18,9 @@ session = Session()
 
 
 # Sand Box
-def store(session, embed=1, path='abc/def/'):
-    image = ImageORM(embed=embed, path=path)
+def store(session, user_id, category_id, image_name, path, suffix, data, password):
+    image = ImageName(user_id=user_id, category_id=category_id, image_name=image_name, path=path, suffix=suffix,
+                      data=data, password=password)
     session.add(image)
     session.commit()
 
@@ -32,9 +33,10 @@ def store_result(session, result, path='abc/def'):
 
 
 @task
-def embed_string(image_input, id=1, image_out='steg', data='898823', password='1234'):
+def embed_string(user_id, category_id, image_name, path, image_suffix='steg', data='default watermark',
+                 password='1234'):
     # Process source image
-    img = Image.open(image_input)
+    img = Image.open(path)
     (width, height) = img.size
     conv = img.convert("RGBA").getdata()
     # image size show ...
@@ -67,9 +69,10 @@ def embed_string(image_input, id=1, image_out='steg', data='898823', password='1
                 b = set_bit(b, 0, v[idx + 2])
             data_img.putpixel((w, h), (r, g, b, a))
             idx = idx + 3
-    steg_img.save(image_input + "-stego.png", "PNG")
+    steg_img.save(image_name + image_suffix, "PNG")
     # embedded successfully..
-    store(session)
+    store(session, user_id=user_id, category_id=category_id, image_name=image_name, path=path,
+          image_suffix=image_suffix, data=data, password=password)
     return "embedded successfully"
 
 
@@ -92,14 +95,6 @@ def extract(in_file, out_file='', password='1234'):
     # Decrypt
     cipher = AESCipher(password)
     data_dec = cipher.decrypt(data_out)
-
-    # Write decrypted data
-    # out_f = open(out_file,"wb")
-    # out_f.write(data_dec)
-    # out_f.close()
-    # Return the watermark to client ..
-    # out_f.close()
-    # Return the watermark to client ..
     store_result(session, result=data_dec)
     return data_dec
 

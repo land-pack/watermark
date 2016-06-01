@@ -18,11 +18,24 @@ class ImageORM(Base):
     embed = Column(Integer)
     path = Column(String(32))
 
+
 class WatermarkORM(Base):
     __tablename__ = 'watermarked'
     id = Column(Integer, primary_key=True, autoincrement=True)
     result = Column(Integer)
     path = Column(String(32))
+
+
+class ImageName(Base):
+    __tablename__ = 'watermark'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer)
+    category_id = Column(Integer)
+    image_name = Column(String(32))
+    path = Column(String(32))
+    image_suffix = Column(String(32))
+    data = Column(String(32))
+    password = Column(String(32))
 
 
 ImageORM.metadata.create_all(engine)
