@@ -12,13 +12,6 @@ Base = declarative_base()
 from sqlalchemy import Column, Integer, String, Boolean
 
 
-class ImageORM(Base):
-    __tablename__ = 'watermark'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    embed = Column(Integer)
-    path = Column(String(32))
-
-
 class WatermarkORM(Base):
     __tablename__ = 'watermarked'
     id = Column(Integer, primary_key=True, autoincrement=True)

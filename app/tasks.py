@@ -33,7 +33,7 @@ def store_result(session, result, path='abc/def'):
 
 
 @task
-def embed_string(user_id, category_id, image_name, path, image_suffix='steg', data='default watermark',
+def embed_string(user_id, category_id, image_name, path, suffix='steg', data='default watermark',
                  password='1234'):
     # Process source image
     img = Image.open(path)
@@ -69,10 +69,10 @@ def embed_string(user_id, category_id, image_name, path, image_suffix='steg', da
                 b = set_bit(b, 0, v[idx + 2])
             data_img.putpixel((w, h), (r, g, b, a))
             idx = idx + 3
-    steg_img.save(image_name + image_suffix, "PNG")
+    steg_img.save(image_name + suffix, "PNG")
     # embedded successfully..
     store(session, user_id=user_id, category_id=category_id, image_name=image_name, path=path,
-          image_suffix=image_suffix, data=data, password=password)
+          suffix=suffix, data=data, password=password)
     return "embedded successfully"
 
 
