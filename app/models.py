@@ -31,6 +31,6 @@ class ImageName(Base):
     password = Column(String(32))
 
 
-ImageORM.metadata.create_all(engine)
+ImageName.metadata.create_all(engine)
 
 # Run this script to create a table ..

@@ -9,7 +9,7 @@ from crypy import AESCipher
 from lsb import decompose, assemble, set_bit
 from celery.task import task
 # ORM ...
-from models import ImageORM, engine, WatermarkORM, ImageName
+from models import engine, WatermarkORM, ImageName
 from sqlalchemy.orm import sessionmaker
 
 # create a session
