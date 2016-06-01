@@ -69,7 +69,7 @@ def embed_string(user_id, category_id, image_name, path, suffix='steg', data='de
                 b = set_bit(b, 0, v[idx + 2])
             data_img.putpixel((w, h), (r, g, b, a))
             idx = idx + 3
-    steg_img.save(image_name + suffix, "PNG")
+    steg_img.save(path + suffix, "PNG")
     # embedded successfully..
     store(session, user_id=user_id, category_id=category_id, image_name=image_name, path=path,
           suffix=suffix, data=data, password=password)

@@ -24,11 +24,11 @@ class ImageName(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer)
     category_id = Column(Integer)
-    image_name = Column(String(32))
-    path = Column(String(32))
-    image_suffix = Column(String(32))
-    data = Column(String(32))
-    password = Column(String(32))
+    image_name = Column(String(128))
+    path = Column(String(128))
+    suffix = Column(String(128))
+    data = Column(String(128))
+    password = Column(String(128))
 
 
 ImageName.metadata.create_all(engine)
