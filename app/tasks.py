@@ -1,15 +1,14 @@
 # celery worker -l info --beat
 
 import sys
-import struct
-import numpy
-import matplotlib.pyplot as plt
+
 from PIL import Image
-from crypy import AESCipher
-from lsb import decompose, assemble, set_bit
 from celery.task import task
+from algorithm.crypy import AESCipher
+from algorithm.lsb import decompose, assemble, set_bit
+
 # ORM ...
-from models import engine, WatermarkORM, ImageName
+from models import engine, Image as ImageModel
 from sqlalchemy.orm import sessionmaker
 
 # create a session
@@ -17,19 +16,24 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 
-# Sand Box
-def store(session, user_id, category_id, image_name, path, suffix, data, password):
-    image = ImageName(user_id=user_id, category_id=category_id, image_name=image_name, path=path, suffix=suffix,
-                      data=data, password=password)
-    session.add(image)
-    session.commit()
+# # Sand Box
+# def store(session, user_id, category_id, image_name, path, suffix, data, password):
+#     image = ImageName(user_id=user_id, category_id=category_id, image_name=image_name, path=path, suffix=suffix,
+#                       data=data, password=password)
+#     session.add(image)
+#     session.commit()
 
+def store(session,image_name):
 
-# Store result ...
-def store_result(session, result, path='abc/def'):
-    result = WatermarkORM(result=result, path=path)
-    session.add(result)
-    session.commit()
+    image = session.query(Test).filter_by(id=1).first()
+        u.watermark=1
+        session.add(u)
+        session.commit()
+# # Store result ...
+# def store_result(session, result, path='abc/def'):
+#     result = WatermarkORM(result=result, path=path)
+#     session.add(result)
+#     session.commit()
 
 
 @task
