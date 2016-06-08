@@ -12,38 +12,19 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean.
 
-
-# class WatermarkORM(Base):
-#     __tablename__ = 'watermarked'
-#     id = Column(Integer, primary_key=True, autoincrement=True)
-#     result = Column(Integer)
-#     path = Column(String(32))
-#
-#
-# class ImageName(Base):
-#     __tablename__ = 'watermark'
-#     id = Column(Integer, primary_key=True, autoincrement=True)
-#     user_id = Column(Integer)
-#     category_id = Column(Integer)
-#     image_name = Column(String(128))
-#     path = Column(String(128))
-#     suffix = Column(String(128))
-#     data = Column(String(128))
-#     password = Column(String(128))
-#
-#
-# ImageName.metadata.create_all(engine)
-
-# Run this script to create a table ..
-
-class Image(Base):
+class ImageModel(Base):
     """
     This Model only for change the watermakr column if this image had process by server!
     By default the `watermark` column is set `0` and after process by server its being `1`!
     """
     __tablename__ = 'images'
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    watermark = Column(Boolean)
+    watermark = Column(Integer)  # 0 is no watermark ,1 is mean watermark
+
+
+class ExtractModel(Base):
+    __tablename__ = 'extract'
+    id = Column(Integer, primary_key=True)
+    watermark = Column(String)  # store the extract context of watermark

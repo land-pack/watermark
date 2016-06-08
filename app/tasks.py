@@ -8,48 +8,43 @@ from algorithm.crypy import AESCipher
 from algorithm.lsb import decompose, assemble, set_bit
 
 # ORM ...
-from models import engine, Image as ImageModel
+from models import engine, ImageModel, ExtractModel
 from sqlalchemy.orm import sessionmaker
 
 # create a session
 Session = sessionmaker(bind=engine)
 session = Session()
+# configure global
+extract_path = '/tmp/watermark-site'
 
 
-# # Sand Box
-# def store(session, user_id, category_id, image_name, path, suffix, data, password):
-#     image = ImageName(user_id=user_id, category_id=category_id, image_name=image_name, path=path, suffix=suffix,
-#                       data=data, password=password)
-#     session.add(image)
-#     session.commit()
+def update_image(session, image_id):
+    image = session.query(ImageModel).filter_by(id=image_id).first()
+    image.watermark = 1  # Set to `1` , mean it's embed the watermark for now!
+    session.add(image)
+    session.commit()
 
-def store(session,image_name):
 
-    image = session.query(Test).filter_by(id=1).first()
-        u.watermark=1
-        session.add(u)
-        session.commit()
-# # Store result ...
-# def store_result(session, result, path='abc/def'):
-#     result = WatermarkORM(result=result, path=path)
-#     session.add(result)
-#     session.commit()
+def store_result(session, image_id, watermark):
+    image = session.query(ExtractModel).filter_by(id=image_id).first()
+    image.watermark = watermark  # store the watermark context
+    session.add(image)
+    session.commit()
 
 
 @task
-def embed_string(user_id, category_id, image_name, path, suffix='steg', data='default watermark',
-                 password='1234'):
+def embed_string(image_path, image_id, watermark_context, watermark_password):
     # Process source image
-    img = Image.open(path)
+    img = Image.open(image_path)
     (width, height) = img.size
     conv = img.convert("RGBA").getdata()
     # image size show ...
     max_size = width * height * 3.0 / 8 / 1024
     # Usable payload size:
-    size_string = len(data)
+    size_string = len(watermark_context)
     # Cncrypt
-    cipher = AESCipher(password)
-    data_enc = cipher.encrypt(data)
+    cipher = AESCipher(watermark_password)
+    data_enc = cipher.encrypt(watermark_context)
     # Process data from string
     v = decompose(data_enc)
     # Add until multiple of 3
@@ -73,18 +68,19 @@ def embed_string(user_id, category_id, image_name, path, suffix='steg', data='de
                 b = set_bit(b, 0, v[idx + 2])
             data_img.putpixel((w, h), (r, g, b, a))
             idx = idx + 3
-    steg_img.save(path + suffix, "PNG")
+    steg_img.save(image_path + '-steg', "PNG")
     # embedded successfully..
-    store(session, user_id=user_id, category_id=category_id, image_name=image_name, path=path,
-          suffix=suffix, data=data, password=password)
+    update_image(session, image_id)
     return "embedded successfully"
 
 
 # Extract data embedded into LSB of the input file
 @task
-def extract(in_file, out_file='', password='1234'):
+def extract(image_id, watermark_password):
     # Process source image
-    img = Image.open(in_file)
+    # Set the tmp file your self!
+    image_path = extract_path + '/' + image_id
+    img = Image.open(image_path)
     (width, height) = img.size
     conv = img.convert("RGBA").getdata()
     # Extract LSBs
@@ -97,9 +93,9 @@ def extract(in_file, out_file='', password='1234'):
             v.append(b & 1)
     data_out = assemble(v)
     # Decrypt
-    cipher = AESCipher(password)
+    cipher = AESCipher(watermark_password)
     data_dec = cipher.decrypt(data_out)
-    store_result(session, result=data_dec)
+    store_result(session, image_id, watermark=data_dec)
     return data_dec
 
 

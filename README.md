@@ -117,7 +117,7 @@ Create a database for watermark
 -------------------------------
 ```shell
 mysql -uroot -p
-create database sqlalchemy
+create database mydb
 ```
 
 Test the watermark with celery
