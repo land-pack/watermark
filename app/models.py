@@ -1,10 +1,10 @@
 from config import DATABASE_PORT, DATABASE_HOST, DATABASE_PASSWORD, DATABASE_USER, DATABASE_NAME, DATABASE_TYPE
 from sqlalchemy import create_engine
+import os
 
 # create a engine to connect to db
-DATABASE_CONF = DATABASE_TYPE + '://' + DATABASE_USER + ':' + DATABASE_PASSWORD + '@' + DATABASE_HOST + ':' + str(
-        DATABASE_PORT) + '/' + DATABASE_NAME
-engine = create_engine(DATABASE_CONF, echo=False)
+DATABASE_CONF = os.environ.get('DATABASE_URL')
+engine = create_engine(DATABASE_CONF)
 # echo is for show the SQL language if you set it True
 
 # Declare a map file
