@@ -8,7 +8,7 @@ from algorithm.crypy import AESCipher
 from algorithm.lsb import decompose, assemble, set_bit
 
 # ORM ...
-from models import engine, ImageModel, ExtractModel
+from models import engine, ImageModel, ExtractModel, CategoryModel
 from sqlalchemy.orm import sessionmaker
 
 # create a session
@@ -18,9 +18,14 @@ session = Session()
 extract_path = '/tmp/watermark-site'
 
 
-def update_image(session, image_id):
+def update_image(session, category_id, image_id):
     image = session.query(ImageModel).filter_by(id=image_id).first()
     image.watermark = 1  # Set to `1` , mean it's embed the watermark for now!
+    category = session.query(CategoryModel).filter_by(id=category_id).first()
+    tmp = category.watermark_count
+    tmp += 1
+    category.watermark_count = tmp
+    session.add(category)
     session.add(image)
     session.commit()
 

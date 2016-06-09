@@ -1,4 +1,3 @@
-from config import DATABASE_PORT, DATABASE_HOST, DATABASE_PASSWORD, DATABASE_USER, DATABASE_NAME, DATABASE_TYPE
 from sqlalchemy import create_engine
 import os
 
@@ -12,7 +11,16 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-from sqlalchemy import Column, Integer, String, Boolean.
+from sqlalchemy import Column, Integer, String
+
+class CategoryModel(Base):
+    """
+    Only for counter the watermark image counter!!
+    """
+    __tablename__ = 'categories'
+    id = Column(Integer, primary_key=True)
+    watermark_count = Column(Integer)
+
 
 class ImageModel(Base):
     """
