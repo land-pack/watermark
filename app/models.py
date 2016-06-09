@@ -2,7 +2,8 @@ from sqlalchemy import create_engine
 import os
 
 # create a engine to connect to db
-DATABASE_CONF = os.environ.get('DATABASE_URL')
+# DATABASE_CONF = os.environ.get('DATABASE_URL')
+DATABASE_CONF = 'mysql://root:openos@127.0.0.1/watermark_site'
 engine = create_engine(DATABASE_CONF)
 # echo is for show the SQL language if you set it True
 
@@ -12,6 +13,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 from sqlalchemy import Column, Integer, String
+
 
 class CategoryModel(Base):
     """
