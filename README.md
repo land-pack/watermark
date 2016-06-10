@@ -125,5 +125,8 @@ Test the watermark with celery
 ```shell
 celery worker -l info --beat
 ```
-Warning don't run this on root!
+if you use `supervisor` manage your process, you may need to set a environment!
+```shell
+export C_FORCE_ROOT="yes"
+```
 
